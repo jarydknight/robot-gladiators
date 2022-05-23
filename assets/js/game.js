@@ -108,8 +108,14 @@ var enemyInfo = [
   }
 
 var fight = function(enemy) {
-    // Alert players that they are starting the round
+    // keep track of who goes first
+    var isPlayerTurn = true;
 
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+      } 
+
+    // Alert players that they are starting the round
     while (enemy.health > 0 && playerInfo.health > 0) {
 
         //stop fight if player health reaches 0
@@ -130,10 +136,12 @@ var fight = function(enemy) {
 
         // repeat and execute as long as the enemy-robot is alive 
         while (playerInfo.health > 0 && enemy.health > 0) {
-            // ask player if they'd like to fight or skip using fightOrSkip function
-            if (fightOrSkip()) {
-                // if true, leave fight by breaking loop
-                break;
+            if (isPlayerTurn) {
+                // ask player if they'd like to fight or skip using fightOrSkip function
+                if (fightOrSkip()) {
+                    // if true, leave fight by breaking loop
+                    break;
+                }
             }
 
             // generate random damage value based on player's attack power
@@ -170,6 +178,8 @@ var fight = function(enemy) {
                     window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
                 }
             }
+
+            isPlayerTurn = !isPlayerTurn;
         }
         
 }
