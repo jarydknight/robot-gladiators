@@ -49,6 +49,7 @@ var fight = function(enemyName) {
 
                 break;
             }
+        }
 
             //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
             enemyHealth = enemyHealth - playerAttack;
@@ -80,23 +81,57 @@ var fight = function(enemyName) {
                 } else {
                     window.alert(playerName + " still has " + playerHealth + " health left.");
                 }
-        }
     }
         
 }
 
-for (let i = 0; i < enemyNames.length; i ++) {
+const startGame = () => {
 
-    if (playerHealth > 0) {
-        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+    playerHealth = 100;
 
-    let pickedEnemyName = enemyNames[i]
+    playerAttack = 10;
+
+    playerMoney = 10;
+
+    for (let i = 0; i < enemyNames.length; i ++) {
+
+        if (playerHealth > 0) {
+            window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
     
-    enemyHealth = 50;
+        let pickedEnemyName = enemyNames[i]
+        
+        enemyHealth = 50;
+    
+        fight(pickedEnemyName);
+        } else {
+            window.alert("You have lost your robot in battle! Game Over!");
+            endGame();
+            break;
+            }
+    }
 
-    fight(pickedEnemyName)
-    } else {
-        window.alert("You have lost your robot in battle! Game Over!");
-        break;
-      }
+    startGame();
 }
+
+const endGame = () => {
+    // if player is still alive, player wins!
+    if (playerHealth > 0) {
+      window.alert("Great job, you've survived the game! You now have a score of " + playerMoney + ".");
+    } 
+    else {
+      window.alert("You've lost your robot in battle.");
+    }
+
+    // ask player if they'd like to play again
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+
+    if (playAgainConfirm) {
+    // restart the game
+    startGame();
+    } 
+    else {
+    window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+    }
+  }
+
+startGame();
